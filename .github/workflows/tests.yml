@@ -3,7 +3,7 @@ name: Lint app
 on: pull_request
 
 jobs:
-  Lint:
+  Test:
     runs-on: ubuntu-latest
     
     steps:
@@ -25,13 +25,12 @@ jobs:
         working-directory: ./project
         run: poetry install --no-root
         
-      - name: Run black
+      - name: Run tests
         working-directory: ./project
-        run: poetry run black .
-        
-      - name: flake8
-        working-directory: ./project
-        run: poetry run flake8 .
-            
+        run: |
+          poetry run python manage.py migrate
+          poetry run python manage.py test
+          
+
           
             
